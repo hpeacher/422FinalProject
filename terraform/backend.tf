@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "project-state-bucket"
-    prefix  = "env/terraform/state"
+    bucket  = "gallerybucket1"
+    prefix  = "terraform/state"
   }
 }
