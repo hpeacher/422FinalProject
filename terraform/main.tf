@@ -75,8 +75,9 @@ resource "google_compute_instance" "app" {
   }
 
   network_interface {
-    network = google_compute_network.vpc.name
-    access_config {}  # This gives it a public IP
+    network    = google_compute_network.custom_vpc.name
+    subnetwork = google_compute_subnetwork.custom_subnet.name
+    access_config {}
   }
 
   metadata_startup_script = file("${path.module}/scripts/cloud-init.sh")
