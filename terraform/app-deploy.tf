@@ -4,7 +4,7 @@ resource "null_resource" "app_service" {
       type        = "ssh"
       user        = "ubuntu"
       private_key = file("~/.ssh/id_rsa")
-      host        = google_compute_instance.app_vm.network_interface[0].access_config[0].nat_ip
+      host        = google_compute_instance.app.network_interface[0].access_config[0].nat_ip
     }
 
     inline = [
