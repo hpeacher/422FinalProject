@@ -51,7 +51,8 @@ resource "google_compute_firewall" "allow-https" {
 
 resource "google_compute_firewall" "allow-flask-8080" {
   name    = "allow-flask-8080"
-  network = "default"
+  network = google_compute_network.custom_vpc.name
+
 
   allow {
     protocol = "tcp"
