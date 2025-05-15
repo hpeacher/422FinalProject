@@ -75,7 +75,7 @@ resource "google_compute_instance" "app" {
   }
 
   network_interface {
-    network = google_compute_network.vpc.name
+    network = google_compute_network.custom_vpc.name
     access_config {}  # This gives it a public IP
   }
 
