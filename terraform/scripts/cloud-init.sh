@@ -32,9 +32,6 @@ ExecStartPre=/bin/bash -c 'set -x; if [ ! -f /opt/app/app.py ]; then git clone h
 # Create python virtual environment if missing
 ExecStartPre=/bin/bash -c 'set -x; if [ ! -d /opt/app/venv ]; then python3 -m venv /opt/app/venv; fi'
 
-# Ensure pip is installed/upgraded in the venv
-ExecStartPre=/bin/bash -c 'set -x; /opt/app/venv/bin/python -m ensurepip --upgrade'
-
 # Upgrade pip (optional, recommended)
 ExecStartPre=/bin/bash -c 'set -x; /opt/app/venv/bin/pip install --upgrade pip'
 
