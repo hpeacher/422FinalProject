@@ -19,14 +19,33 @@ Description=Start My App on Boot
 After=network.target
 
 [Service]
-ExecStartPre=/usr/bin/mkdir -p /opt/app
-ExecStartPre=/bin/bash -c '[ -f /opt/app/app.py ] || git clone https://github.com/hpeacher/422FinalProject.git /opt/app'
-ExecStartPre=/bin/bash -c '[ -d /opt/app/venv ] || python3 -m venv /opt/app/venv'
-ExecStartPre=/bin/bash -c '/opt/app/venv/bin/pip install --no-cache-dir -r /opt/app/requirements.txt'
+Type=simple
 User=root
-WorkingDirectory=/
+WorkingDirectory=/opt/app
+
+# Create app directory
+ExecStartPre=/bin/bash -c 'set -x; mkdir -p /opt/app'
+
+# Clone repo if app.py not present
+ExecStartPre=/bin/bash -c 'set -x; if [ ! -f /opt/app/app.py ]; then git clone https://github.com/hpeacher/422FinalProject.git /opt/app; fi'
+
+# Create python virtual environment if missing
+ExecStartPre=/bin/bash -c 'set -x; if [ ! -d /opt/app/venv ]; then python3 -m venv /opt/app/venv; fi'
+
+# Ensure pip is installed/upgraded in the venv
+ExecStartPre=/bin/bash -c 'set -x; /opt/app/venv/bin/python -m ensurepip --upgrade'
+
+# Upgrade pip (optional, recommended)
+ExecStartPre=/bin/bash -c 'set -x; /opt/app/venv/bin/pip install --upgrade pip'
+
+# Install python dependencies inside venv
+ExecStartPre=/bin/bash -c 'set -x; /opt/app/venv/bin/pip install --no-cache-dir -r /opt/app/requirements.txt'
+
+# Start the app with the venv python
 ExecStart=/opt/app/venv/bin/python /opt/app/app.py
-Restart=always
+
+Restart=on-failure
+RestartSec=5
 Environment=PYTHONUNBUFFERED=1
 
 [Install]
