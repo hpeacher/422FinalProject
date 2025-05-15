@@ -20,7 +20,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/opt/app
-ExecStart=/usr/bin/python3 /opt/app/main.py
+ExecStart=/usr/bin/python3 /opt/app/app.py
 Restart=always
 
 [Install]
