@@ -20,7 +20,7 @@ After=network.target
 [Service]
 ExecStartPre=/usr/bin/mkdir -p /opt/app
 User=root
-WorkingDirectory=/opt/app
+WorkingDirectory=/
 ExecStart=/usr/bin/python3 /opt/app/app.py
 Restart=always
 Environment=PYTHONUNBUFFERED=1
