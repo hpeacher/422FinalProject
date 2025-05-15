@@ -18,6 +18,7 @@ Description=Start My App on Boot
 After=network.target
 
 [Service]
+ExecStartPre=/usr/bin/mkdir -p /opt/app
 User=root
 WorkingDirectory=/opt/app
 ExecStart=/usr/bin/python3 /opt/app/app.py
