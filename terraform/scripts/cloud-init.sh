@@ -22,6 +22,7 @@ User=root
 WorkingDirectory=/opt/app
 ExecStart=/usr/bin/python3 /opt/app/app.py
 Restart=always
+Environment=PYTHONUNBUFFERED=1
 
 [Install]
 WantedBy=multi-user.target
