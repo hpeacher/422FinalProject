@@ -21,10 +21,11 @@ After=network.target
 [Service]
 ExecStartPre=/usr/bin/mkdir -p /opt/app
 ExecStartPre=/bin/bash -c '[ -f /opt/app/app.py ] || git clone https://github.com/hpeacher/422FinalProject.git /opt/app'
-ExecStartPre=/usr/bin/pip3 install -r /opt/app/requirements.txt
+ExecStartPre=/bin/bash -c '[ -d /opt/app/venv ] || python3 -m venv /opt/app/venv'
+ExecStartPre=/bin/bash -c '/opt/app/venv/bin/pip install --no-cache-dir -r /opt/app/requirements.txt'
 User=root
 WorkingDirectory=/
-ExecStart=/usr/bin/python3 /opt/app/app.py
+ExecStart=/opt/app/venv/bin/python /opt/app/app.py
 Restart=always
 Environment=PYTHONUNBUFFERED=1
 
