@@ -87,7 +87,7 @@ resource "google_compute_instance" "app" {
     access_config {}
   }
 
-  metadata_startup_script = file("${path.module}/scripts/cloud-init.sh")
+  metadata_startup_script = file("${path.module}/scripts/cloud-init.yaml")
 
   tags = ["http-server", "flask-server"]
 }

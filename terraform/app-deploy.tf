@@ -8,14 +8,15 @@ resource "null_resource" "app_service" {
     }
 
     inline = [
-      "sudo bash -c 'cat <<EOF > /etc/systemd/system/myapp.service
+      <<-EOT
+        sudo bash -c 'cat <<EOF > /etc/systemd/system/myapp.service
 [Unit]
 Description=My Python App
 After=network.target
 
 [Service]
-ExecStartPre=/bin/bash -c \"[ -f /opt/app/app.py ] || git clone https://github.com/hpeacher/422FinalProject.git /opt/app\"
-ExecStartPre=/bin/bash -c \"/usr/bin/python3 -m venv /opt/app/venv && /opt/app/venv/bin/python -m ensurepip --upgrade\"
+ExecStartPre=/bin/bash -c "[ -f /opt/app/app.py ] || git clone https://github.com/hpeacher/422FinalProject.git /opt/app"
+ExecStartPre=/bin/bash -c "/usr/bin/python3 -m venv /opt/app/venv && /opt/app/venv/bin/python -m ensurepip --upgrade"
 ExecStartPre=/opt/app/venv/bin/pip install --no-cache-dir -r /opt/app/requirements.txt
 WorkingDirectory=/opt/app
 ExecStart=/opt/app/venv/bin/python /opt/app/app.py
@@ -24,8 +25,8 @@ User=ubuntu
 
 [Install]
 WantedBy=multi-user.target
-EOF'",
-
+EOF'
+      EOT,
       "sudo systemctl daemon-reexec",
       "sudo systemctl daemon-reload",
       "sudo systemctl enable myapp",
