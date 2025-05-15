@@ -19,7 +19,7 @@ After=network.target
 
 [Service]
 ExecStartPre=/usr/bin/mkdir -p /opt/app
-ExecStartPre=/usr/bin/test -f /opt/app/app.py || /usr/bin/git clone https://github.com/hpeacher/422FinalProject.git /opt/app
+ExecStartPre=/bin/bash -c '[ -f /opt/app/app.py ] || git clone https://github.com/hpeacher/422FinalProject.git /opt/app'
 User=root
 WorkingDirectory=/
 ExecStart=/usr/bin/python3 /opt/app/app.py
